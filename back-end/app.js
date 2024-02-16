@@ -4,6 +4,7 @@ const morgan = require('morgan') // middleware for nice logging of incoming HTTP
 const cors = require('cors') // middleware for enabling CORS (Cross-Origin Resource Sharing) requests.
 const mongoose = require('mongoose')
 
+
 const app = express() // instantiate an Express object
 app.use(morgan('dev', { skip: (req, res) => process.env.NODE_ENV === 'test' })) // log all incoming requests, except when in unit test mode.  morgan has a few logging default styles - dev is a nice concise color-coded style
 app.use(cors()) // allow cross-origin resource sharing
@@ -11,6 +12,7 @@ app.use(cors()) // allow cross-origin resource sharing
 // use express's builtin body-parser middleware to parse any data included in a request
 app.use(express.json()) // decode JSON-formatted incoming POST data
 app.use(express.urlencoded({ extended: true })) // decode url-encoded incoming POST data
+// app.use('/public', express.static('/Users/apple/Desktop/Agile/Project/3-simple-mern-stack-app-Ella-zizzzy/back-end/public'));
 
 // connect to database
 mongoose
@@ -77,6 +79,26 @@ app.post('/messages/save', async (req, res) => {
     })
   }
 })
+
+const aboutUsContent = {
+  title: "About Us",
+  paragraphs: [
+    "Hi! My name is Ella Li. ",
+    "I'm a senior undergraduate student majoring in Computer Science and Economics at New York University.",
+    "I love nail arts. 💅🏼",
+    "My favorite game is The Legend of Zelda: Breath of the Wild. ",
+    "If a Nintendo character were to represent me, it should be Princess Daisy.🌼",
+    ""
+  ],
+  imageUrl: "https://lh3.googleusercontent.com/drive-viewer/AEYmBYTSOl1cAqSZrHu2IuP_B6McwHqdUbZdvfBsKjw-8sDao-VgXAg36StBr1LuO7wxKY1mrMrtXu8zt2IMU8NA0itE_RamlA=s1600"
+  // imageUrl:"http://localhost:5002/public/asset/5F203F70-731C-4F41-A55F-D1C58959862A_1_105_c.jpeg"
+};
+
+app.get('/aboutus', (req, res) => {
+  res.json(aboutUsContent);
+});
+
+
 
 // export the express app we created to make it available to other modules
 module.exports = app // CommonJS export style!
